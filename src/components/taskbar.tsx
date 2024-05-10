@@ -14,12 +14,11 @@ const Taskbar = () => {
     return (
         <>
             <div
-                className={"h-full w-full transition-colors bg-neutral-800/50"}>
+                className={"flex flex-col items-start gap-2 justify-between p-2 text-base font-medium whitespace-nowrap rounded text-violet-500 transition-colors cursor-pointer w-96 border border-violet-400 bg-violet-400/20"}>
                 {tasks.map((task, index) => {
                     return <Card key={index} task={task} setTasks={setTasks}/>;
                 })}
 
-                {/*<AddCard column={} setCards={setCards}/>*/}
                 <motion.button
                     className="flex w-full items-center gap-1.5 px-3 py-1.5 text-xs text-neutral-400 transition-colors hover:text-neutral-50">
                     <span>Add card</span>

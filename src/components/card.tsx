@@ -7,7 +7,7 @@ interface CardProps {
 
 const Card = ({ task, setTasks }: CardProps) => {
     return(
-        <div>Tas1</div>
+        <div>{task.title}</div>
     )
 }
 export default Card

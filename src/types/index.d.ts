@@ -3,11 +3,11 @@ export interface Employee {
     name: string
     plan: string;
     imageUrl: string
-    totalPoint: number
+    totalPoint?: number
 }
 
 export interface Task {
-    employeeId: string
+    employeeId: number
     title: string;
     priority: "IMPORTANT" | "NOT_IMPORTANT" | "ANY_TYPE"
     point: number
