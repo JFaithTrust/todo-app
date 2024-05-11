@@ -22,8 +22,8 @@ const Option = ({ worker, setOpen }: OptionProps) => {
                 <motion.span variants={actionIconVariants}>
                     <Avatar>
                         <AvatarImage
-                            src="https://unsplash.com/photos/man-in-white-crew-neck-t-shirt-a6PMA5JEmWE"/>
-                        <AvatarFallback>JS</AvatarFallback>
+                            src={worker.imageUrl}/>
+                        <AvatarFallback>{worker.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                 </motion.span>
                 <div className={"flex flex-col items-start gap-x-4"}>
