@@ -5,7 +5,7 @@ import {motion} from "framer-motion";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {useForm} from "react-hook-form";
-import { z } from "zod"
+import {z} from "zod"
 import {zodResolver} from "@hookform/resolvers/zod";
 import {TaskSchema} from "@/validation";
 import {v4 as uuidv4} from "uuid";
@@ -15,11 +15,11 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 interface CreateModalProps {
     isCreateOpen: boolean;
     setIsCreateOpen: (open: boolean) => void;
-    workerId?: string;
+    // workerId?: string;
 }
 
-const CreateTaskModal = ({ isCreateOpen, setIsCreateOpen, workerId }: CreateModalProps) => {
-    const { addTask } = useDataStore();
+const CreateTaskModal = ({isCreateOpen, setIsCreateOpen}: CreateModalProps) => {
+    const {addTask, updateWorker, getWorkerById, workerId, getTasksByWorkerId} = useDataStore();
 
 
     const form = useForm<z.infer<typeof TaskSchema>>({
@@ -34,13 +34,21 @@ const CreateTaskModal = ({ isCreateOpen, setIsCreateOpen, workerId }: CreateModa
     function onSubmit(data: z.infer<typeof TaskSchema>) {
         const newTask = {
             id: uuidv4(),
-            employeeId: workerId || "",
+            employeeId: workerId,
             title: data.title,
             point: data.point,
             priority: data.priority,
         }
-        if (workerId){
-            addTask(newTask);
+        addTask(newTask)
+
+        const worker = getWorkerById(workerId)
+        if (worker) {
+            const sum = getTasksByWorkerId(workerId).reduce((n, {point}) => n + +point, 0)
+            const newWorker = {
+                ...worker,
+                totalPoint: sum
+            }
+            updateWorker(workerId, newWorker)
         }
         form.reset()
         setIsCreateOpen(false)
@@ -50,16 +58,16 @@ const CreateTaskModal = ({ isCreateOpen, setIsCreateOpen, workerId }: CreateModa
         <AnimatePresence>
             {isCreateOpen && (
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    exit={{opacity: 0}}
                     onClick={() => setIsCreateOpen(false)}
                     className="bg-neutral-900/20 backdrop-blur p-8 fixed inset-0 z-50 grid place-items-center overflow-y-scroll cursor-pointer"
                 >
                     <motion.div
-                        initial={{ scale: 0, rotate: "12.5deg" }}
-                        animate={{ scale: 1, rotate: "0deg" }}
-                        exit={{ scale: 0, rotate: "0deg" }}
+                        initial={{scale: 0, rotate: "12.5deg"}}
+                        animate={{scale: 1, rotate: "0deg"}}
+                        exit={{scale: 0, rotate: "0deg"}}
                         onClick={(e) => e.stopPropagation()}
                         className="bg-gradient-to-br from-violet-950 from-40% via-violet-800 via-80% to-violet-500 text-white p-6 rounded-3xl w-full max-w-lg shadow-xl cursor-default relative overflow-hidden"
                     >

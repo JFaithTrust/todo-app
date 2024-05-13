@@ -2,12 +2,15 @@
 
 import React, {useEffect, useState} from "react";
 import {Employee, Task} from "@/types";
+import {id} from "postcss-selector-parser";
 
 interface DataContextType {
     workers: Employee[];
     addWorker: (worker: Employee) => void;
     updateWorker: (id: string, worker: Employee) => void;
     deleteWorker: (id: string) => void;
+    workerId: string;
+    setWorkerId: (id: string) => void;
 
     tasks: Task[];
     addTask: (task: Task) => void;
@@ -16,6 +19,7 @@ interface DataContextType {
 
     getTasksByWorkerId: (employeeId: string) => Task[];
     getWorkerById: (id: string) => Employee | undefined;
+    getTaskById: (id: string) => Task | undefined
 }
 
 const DataContext = React.createContext<DataContextType | undefined>(undefined);
@@ -28,31 +32,34 @@ export const useDataStore = () => {
     return context
 }
 
-export const DataProvider= ({children}: {children: React.ReactNode}) => {
+export const DataProvider = ({children}: { children: React.ReactNode }) => {
     const [workers, setWorkers] = useState<Employee[]>([]);
     const [tasks, setTasks] = useState<Task[]>([]);
+    const [workerId, setWorkerId] = useState<string>("");
 
-    // useEffect(() => {
-    //     if (workers){
-    //         localStorage.setItem("workers", JSON.stringify(workers));
-    //     }
-    // }, [workers]);
-    //
-    // useEffect(() => {
-    //     if(tasks){
-    //         localStorage.setItem("tasks", JSON.stringify(tasks));
-    //     }
-    // }, [tasks]);
+    useEffect(() => {
+        if (workers.length > 0){
+            setWorkerId(workers[0].id)
+        }
+    }, [workers]);
+
+    useEffect(() => {
+        const worker = getWorkerById(tasks[tasks.length-1]?.employeeId);
+        if(worker){
+            worker.totalPoint = 0
+            getTasksByWorkerId(worker.id).forEach(task => worker.totalPoint += +task.point)
+        }
+    }, [tasks]);
 
     useEffect(() => {
         const workers = localStorage.getItem("workers");
         const tasks = localStorage.getItem("tasks");
 
-        if(workers){
+        if (workers) {
             setWorkers(JSON.parse(workers));
         }
 
-        if(tasks){
+        if (tasks) {
             setTasks(JSON.parse(tasks));
         }
     }, []);
@@ -69,6 +76,9 @@ export const DataProvider= ({children}: {children: React.ReactNode}) => {
 
     const deleteWorker = (id: string) => {
         setWorkers(workers.filter((w) => w.id !== id));
+        setTasks(tasks.filter((t) => t.employeeId !== id))
+        setWorkerId("")
+        localStorage.setItem("tasks", JSON.stringify(tasks.filter((t) => t.employeeId !== id)))
         localStorage.setItem("workers", JSON.stringify(workers.filter((w) => w.id !== id)));
     }
 
@@ -92,15 +102,25 @@ export const DataProvider= ({children}: {children: React.ReactNode}) => {
     }
 
     const getWorkerById = (id: string) => {
+        // const tasks = getTasksByWorkerId(id)
+        // const worker = workers.find((w) => w.id === id);
+        // const sum  = tasks.reduce((acc, task) => acc + +task.point, 0) || 0;
+        // return worker ? {...worker, totalPoint: sum} : undefined;
         return workers.find((w) => w.id === id);
     }
 
-    return(
+    const getTaskById = (id: string) => {
+        return tasks.find((t) => t.id === id)
+    }
+
+    return (
         <DataContext.Provider value={{
             workers,
             addWorker,
             updateWorker,
             deleteWorker,
+            workerId,
+            setWorkerId,
 
             tasks,
             addTask,
@@ -108,7 +128,8 @@ export const DataProvider= ({children}: {children: React.ReactNode}) => {
             deleteTask,
 
             getTasksByWorkerId,
-            getWorkerById
+            getWorkerById,
+            getTaskById
         }}>
             {children}
         </DataContext.Provider>

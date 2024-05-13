@@ -3,7 +3,7 @@ export interface Employee {
     name: string
     plan: string;
     imageUrl: string
-    totalPoint?: string
+    totalPoint : number
 }
 
 export interface Task {

@@ -22,7 +22,7 @@ const Option = ({ worker, setOpen }: OptionProps) => {
                 <motion.span variants={actionIconVariants}>
                     <Avatar>
                         <AvatarImage
-                            src={worker.imageUrl}/>
+                            src={worker?.imageUrl}/>
                         <AvatarFallback>{worker.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                 </motion.span>

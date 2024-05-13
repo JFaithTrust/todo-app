@@ -77,6 +77,7 @@ const CreateModal = ({ isCreateOpen, setIsCreateOpen }: CreateModalProps) => {
     async function onSubmit(data: z.infer<typeof UserSchema>) {
         const newWorker = {
             id: uuidv4(),
+            totalPoint: 0,
             name: data.name,
             plan: data.plan,
             imageUrl: selectedFile

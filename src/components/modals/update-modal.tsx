@@ -82,7 +82,7 @@ const UpdateModal = ({ isUpdateOpen, setIsUpdateOpen, worker }: UpdateModalProps
 
     function onSubmit(data: z.infer<typeof UserSchema>) {
         const newWorker = {
-            id: uuidv4(),
+            id: worker?.id as string,
             name: data.name,
             plan: data.plan,
             imageUrl: selectedFile

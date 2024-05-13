@@ -2,7 +2,7 @@
 
 import {motion} from "framer-motion";
 import {FiChevronDown, FiDelete} from "react-icons/fi";
-import { iconVariants, wrapperVariants} from "@/constants";
+import {iconVariants, wrapperVariants} from "@/constants";
 import {Employee} from "@/types";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import Option from "@/components/option";
@@ -16,13 +16,13 @@ import {useDataStore} from "@/context/employee";
 import UpdateModal from "@/components/modals/update-modal";
 import {Plus} from "lucide-react";
 
-interface TopbarProps {
-    setWorkerId: (id: string) => void;
-}
+// interface TopbarProps {
+//     setWorkerId: (id: string) => void;
+// }
 
-const Topbar = ({setWorkerId}: TopbarProps) => {
+const Topbar = () => {
     const [open, setOpen] = useState(false)
-    const { getWorkerById, workers, deleteWorker } = useDataStore()
+    const {getWorkerById, workers, deleteWorker, setWorkerId} = useDataStore()
     const [selectedWorker, setSelectedWorker] = useState<Employee>()
 
     // modals state
@@ -49,8 +49,8 @@ const Topbar = ({setWorkerId}: TopbarProps) => {
 
     return (
         <div className="p-8 pb-12 flex items-center justify-center">
-            <CreateModal isCreateOpen={isCreateOpen} setIsCreateOpen={setIsCreateOpen} />
-            <UpdateModal isUpdateOpen={isUpdateOpen} setIsUpdateOpen={setIsUpdateOpen} worker={selectedWorker} />
+            <CreateModal isCreateOpen={isCreateOpen} setIsCreateOpen={setIsCreateOpen}/>
+            <UpdateModal isUpdateOpen={isUpdateOpen} setIsUpdateOpen={setIsUpdateOpen} worker={selectedWorker}/>
             <motion.div animate={open ? "open" : "closed"} className="relative">
                 <div
                     onClick={() => setIsCreateOpen(true)}
