@@ -28,6 +28,7 @@ const CreateTaskModal = ({isCreateOpen, setIsCreateOpen}: CreateModalProps) => {
             title: "",
             point: "",
             priority: "NOT_IMPORTANT",
+            projectName: "",
         },
     })
 
@@ -38,6 +39,7 @@ const CreateTaskModal = ({isCreateOpen, setIsCreateOpen}: CreateModalProps) => {
             title: data.title,
             point: data.point,
             priority: data.priority,
+            projectName: data.projectName,
         }
         addTask(newTask)
 
@@ -93,12 +95,26 @@ const CreateTaskModal = ({isCreateOpen, setIsCreateOpen}: CreateModalProps) => {
                                     />
                                     <FormField
                                         control={form.control}
+                                        name="projectName"
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <FormLabel>Project Name</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Project Name"
+                                                           className={"bg-transparent rounded"} {...field}/>
+                                                </FormControl>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
                                         name="point"
                                         render={({field}) => (
                                             <FormItem>
-                                                <FormLabel>Title</FormLabel>
+                                                <FormLabel>Point</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="Min 0, Max 16" type={"number"} min={0} max={16}
+                                                    <Input placeholder="Min 1, Max 16" type={"number"} min={1} max={16}
                                                            step={1}
                                                            className={"bg-transparent rounded"} {...field}/>
                                                 </FormControl>

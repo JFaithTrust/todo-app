@@ -54,7 +54,7 @@ const Topbar = () => {
             <motion.div animate={open ? "open" : "closed"} className="relative">
                 <div
                     onClick={() => setIsCreateOpen(true)}
-                    className={"flex items-center gap-2 justify-between p-2 text-base font-medium whitespace-nowrap rounded transition-colors cursor-pointer border border-violet-400 bg-violet-400/20 w-96 text-gray-400 mb-2"}>
+                    className={"flex items-center gap-2 justify-between p-2 text-base font-medium whitespace-nowrap rounded transition-colors cursor-pointer border border-violet-400 bg-violet-400/20 text-gray-400 mb-2"}>
                     <span className={""}>Create User</span>
                     <Plus className={"w-6 h-6 border border-gray-400 rounded"}/>
                 </div>
@@ -63,14 +63,14 @@ const Topbar = () => {
                         <ContextMenuTrigger>
                             <motion.div
                                 onClick={() => setOpen((pv) => !pv)}
-                                className="flex items-center gap-2 justify-between p-2 text-base font-medium whitespace-nowrap rounded text-violet-500 transition-colors cursor-pointer w-96 border border-violet-400 bg-violet-400/20"
+                                className="flex items-center gap-2 justify-between p-2 text-base font-medium whitespace-nowrap rounded text-violet-500 transition-colors cursor-pointer border border-violet-400 bg-violet-400/20"
                             >
                                 <div className={"flex items-center gap-x-4"}>
-                                    <motion.span>
+                                    <motion.span className={"sm:block hidden"}>
                                         <Avatar>
                                             <AvatarImage
-                                                src={selectedWorker?.imageUrl}/>
-                                            <AvatarFallback>JS</AvatarFallback>
+                                                src={selectedWorker?.imageUrl} className={"w-10 h-10"} />
+                                            <AvatarFallback>{selectedWorker.name.charAt(0)}</AvatarFallback>
                                         </Avatar>
                                     </motion.span>
                                     <div className={"flex flex-col items-start gap-x-4"}>
@@ -80,7 +80,7 @@ const Topbar = () => {
                                 </div>
                                 <div className="flex items-center gap-x-2">
                                     {selectedWorker?.totalPoint && <Badge
-                                        className={"bg-gray-100 hover:bg-gray-100 border-violet-400 p-1"}>{selectedWorker.totalPoint}</Badge>}
+                                        className={"bg-gray-100 hover:bg-gray-100 border-violet-400 px-2 xs:block hidden py-1"}>{selectedWorker.totalPoint}</Badge>}
                                     <motion.span variants={iconVariants}>
                                         <FiChevronDown/>
                                     </motion.span>
@@ -95,11 +95,14 @@ const Topbar = () => {
                                         <IoMdCreate className={"w-4 h-4"}/>
                                         <span>Update User</span>
                                     </ContextMenuItem>
-                                    <ContextMenuItem className={"flex items-center justify-between text-red-600"}
-                                                     onClick={() => handleDeleteWorker(selectedWorker?.id)}>
-                                        <MdDeleteForever className={"w-4 h-4"}/>
-                                        <span>Delete User</span>
-                                    </ContextMenuItem></>
+                                    {!open &&
+                                        <ContextMenuItem className={"flex items-center justify-between text-red-600"}
+                                                         onClick={() => handleDeleteWorker(selectedWorker?.id)}>
+                                            <MdDeleteForever className={"w-4 h-4"}/>
+                                            <span>Delete User</span>
+                                        </ContextMenuItem>
+                                    }
+                                </>
                             )}
                         </ContextMenuContent>
                     </ContextMenu>
@@ -108,7 +111,7 @@ const Topbar = () => {
                     initial={wrapperVariants.closed}
                     variants={wrapperVariants}
                     style={{originY: "top", translateX: "-50%"}}
-                    className="flex flex-col gap-2 p-2 rounded shadow-xl absolute top-[105%] left-[50%] w-96 overflow-hidden bg-violet-800 z-10"
+                    className="flex flex-col gap-2 p-2 rounded shadow-xl absolute top-[105%] left-[50%] xs:w-96 w-80 overflow-hidden bg-violet-800 z-10"
                 >
                     {workers.map(worker => (
                         <div onClick={() => handleSelectWorker(worker.id)} key={worker.id}

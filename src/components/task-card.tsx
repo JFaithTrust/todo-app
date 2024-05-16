@@ -33,10 +33,10 @@ const TaskCard = ({task, workerId}: CardProps) => {
         deleteTask(id)
     }
     return (
-        <div className={"flex justify-between"}>
+        <div className={"flex justify-between items-center"}>
             <UpdateTaskModal isUpdateOpen={isUpdateOpen} setIsUpdateOpen={setIsUpdateOpen} task={task} />
-            <div className={"flex items-center"}>
-                <div className={`flex items-center gap-x-1.5 w-36 ${
+            <div className={"flex items-center md:gap-x-0 gap-x-1"}>
+                <div className={`flex items-center gap-x-1.5 md:w-36 w-fit ${
                     task.priority === "VERY_IMPORTANT" ? "text-red-500" :
                         task.priority === "IMPORTANT" ? "text-yellow-500" :
                             "text-green-500"
@@ -45,12 +45,17 @@ const TaskCard = ({task, workerId}: CardProps) => {
                         <CgDanger className={"text-red-500 animate-pulse"}/>}
                     {task.priority === "IMPORTANT" && <TiWarning className={"text-yellow-500 animate-pulse"}/>}
                     {task.priority === "NOT_IMPORTANT" && <MdFiberNew className={"text-green-500 animate-pulse"}/>}
-                    <div>{task.priority.split('_').join(" ").toLowerCase()}</div>
+                    <div className={"md:block hidden"}>{task.priority.split('_').join(" ").toLowerCase()}</div>
                 </div>
-                <span>{task.title}</span>
+                <span className={"text-wrap sm:text-base text-sm text-ellipsis overflow-hidden"} style={{
+                    WebkitLineClamp: 2,
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical"
+                }}>{task.title}</span>
             </div>
             <div className={"flex items-end gap-x-2"}>
-                <div className={"flex flex-col gap-y-[1px]"}>
+                <Badge className={"px-2 bg-violet-600 border-none rounded md:text-sm text-xs text-white"}>{task.projectName}</Badge>
+                <div className={"sm:flex flex-col gap-y-[1px] hidden"}>
                     {Array.from({length: 8 - (+task.point / 2)}, (_, i) => (
                         <div key={i} className={"w-2 h-[2.5px] bg-red-500/40"}/>
                     ))}

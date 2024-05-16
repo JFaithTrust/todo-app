@@ -14,27 +14,11 @@ const Taskbar = () => {
     const [isCreateOpen, setIsCreateOpen] = useState(false)
     const [selectedTasks, setSelectedTasks] = useState<Task[]>([])
 
-    // useEffect(() => {
-    //     setSelectedTasks(getTasksByWorkerId(workerId));
-    // }, []);
-
     useEffect(() => {
         setSelectedTasks(
             getTasksByWorkerId(workerId)
         )
     }, [workerId, tasks]);
-
-    // useEffect(() => {
-    //     setTasks(getTasksByWorkerId(workerId));
-    // }, [workerId]);
-    //
-    // useEffect(() => {
-    //     const tasks = localStorage.getItem("tasks");
-    //     if (tasks) {
-    //         const checkIfTaskExists = JSON.parse(tasks).find((task: Task) => task.employeeId === workerId);
-    //         setTasks(checkIfTaskExists);
-    //     }
-    // }, []);
 
     if (workerId === "") {
         return (

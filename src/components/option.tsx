@@ -22,7 +22,7 @@ const Option = ({ worker, setOpen }: OptionProps) => {
                 <motion.span variants={actionIconVariants}>
                     <Avatar>
                         <AvatarImage
-                            src={worker?.imageUrl}/>
+                            src={worker?.imageUrl} className={"w-10 h-10"} />
                         <AvatarFallback>{worker.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                 </motion.span>
@@ -31,7 +31,7 @@ const Option = ({ worker, setOpen }: OptionProps) => {
                     <span>{worker.name}</span>
                 </div>
             </div>
-            {worker.totalPoint && <Badge className={"bg-transparent hover:bg-transparent border-violet-400"}>{worker.totalPoint}</Badge> }
+            {worker.totalPoint > 0 && <Badge className={"bg-gray-100 hover:bg-gray-100 border-violet-400 px-2 py-1"}>{worker.totalPoint}</Badge> }
         </motion.li>
     );
 };

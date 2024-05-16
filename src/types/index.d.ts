@@ -12,4 +12,5 @@ export interface Task {
     title: string;
     priority: "IMPORTANT" | "NOT_IMPORTANT" | "VERY_IMPORTANT"
     point: string
+    projectName: string
 }

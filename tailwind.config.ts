@@ -23,6 +23,14 @@ const config = {
         "2xl": "1400px",
       },
     },
+    screens: {
+        xs: "425px",
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -58,6 +66,10 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+      },
+      fontFamily: {
+        rubik: ["Rubik Wet Paint", "system-ui"],
+        rubikGlitch: ["Rubik Glitch Pop", "system-ui"],
       },
       borderRadius: {
         lg: "var(--radius)",

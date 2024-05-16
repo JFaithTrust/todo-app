@@ -159,8 +159,8 @@ const CreateModal = ({ isCreateOpen, setIsCreateOpen }: CreateModalProps) => {
                                                             JPG, JPEG (MAX. 10 MB)</p>
                                                     </div>
                                                 ) : (
-                                                <div className={"w-full h-56 relative"}>
-                                                    <Image src={selectedFile} alt="selectedFile" objectFit={"cover"} layout={"fill"} style={{borderRadius: "0.8rem"}}/>
+                                                <div className={"h-40 w-full relative"}>
+                                                    <Image src={selectedFile} alt="selectedFile" objectFit={"contain"} layout={"fill"} style={{borderRadius: "0.8rem"}}/>
                                                 </div>
                                                 )}
                                             <Input
